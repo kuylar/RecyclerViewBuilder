@@ -1,6 +1,33 @@
 # RecyclerViewBuilder
 
+[![](https://jitpack.io/v/kuylar/RecyclerViewBuilder.svg)](https://jitpack.io/#kuylar/RecyclerViewBuilder)
+
 A simple class for building RecyclerViews without having to make an adapter and a ViewHolder for each one.
+
+## Installing
+
+```kts
+// settings.gradle.kts
+dependencyResolutionManagement {
+    // ...
+	maven { url = uri("https://jitpack.io") }
+}
+```
+
+```kts
+// build.gradle.kts
+android {
+	buildFeatures {
+		// Recommended: Enable ViewBindings
+		viewBinding = true
+	}
+}
+
+dependencies {
+	// Find the latest version # from releases
+	implementation("com.github.kuylar:RecyclerViewBuilder:1.0.0")
+}
+```
 
 ## Usage
 
