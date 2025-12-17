@@ -17,12 +17,21 @@
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<Button
+		android:id="@+id/addmultiplebutton"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:text="Add Multiple Items"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/addbutton"/>
+
+	<Button
 		android:id="@+id/addinvalidbutton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:text="Add Invalid Item"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/addbutton" />
+		app:layout_constraintTop_toBottomOf="@id/addmultiplebutton" />
 
 	<Button
 		android:id="@+id/addspecialbutton"
@@ -32,7 +41,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintHorizontal_bias="1.0"
 		app:layout_constraintStart_toEndOf="@+id/addinvalidbutton"
-		app:layout_constraintTop_toBottomOf="@id/addbutton" />
+		app:layout_constraintTop_toBottomOf="@id/addmultiplebutton" />
 
 	<Button
 		android:id="@+id/loadingbutton"

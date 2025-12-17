@@ -61,6 +61,8 @@ class ExtensibleRecyclerAdapter(
 	}
 
 	fun addItems(newItems: Collection<Any>) {
+		// Remove the "no items" item
+		if (items.isEmpty()) notifyItemRemoved(0)
 		items.addAll(newItems)
 		notifyItemRangeInserted(items.size - newItems.size, newItems.size)
 	}

@@ -73,6 +73,9 @@ class MainActivity : AppCompatActivity() {
 		binding.addbutton.setOnClickListener {
 			adapter.addItem("New Item")
 		}
+		binding.addmultiplebutton.setOnClickListener {
+			adapter.addItems((1 .. 5).map { "Item $it" })
+		}
 		binding.addinvalidbutton.setOnClickListener {
 			adapter.addItem(1)
 		}
