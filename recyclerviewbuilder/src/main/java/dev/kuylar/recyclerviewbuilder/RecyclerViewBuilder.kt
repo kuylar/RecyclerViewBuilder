@@ -2,14 +2,17 @@
 
 package dev.kuylar.recyclerviewbuilder
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import dev.kuylar.recyclerviewbuilder.views.EmptyListViewBinding
 import dev.kuylar.recyclerviewbuilder.views.ItemNotFoundViewBinding
 import dev.kuylar.recyclerviewbuilder.views.NullViewBinding
@@ -25,6 +28,7 @@ class RecyclerViewBuilder(private val context: Context) {
 	private var scrollToTopListener: ((adapter: ExtensibleRecyclerAdapter) -> Unit)? = null
 	private var scrollToLeftListener: ((adapter: ExtensibleRecyclerAdapter) -> Unit)? = null
 	private var scrollToRightListener: ((adapter: ExtensibleRecyclerAdapter) -> Unit)? = null
+	private var dividerItemDecoration: RecyclerView.ItemDecoration? = null
 
 	inline fun <reified TItem, reified TBinding : ViewBinding> addView(crossinline bindMethod: (binding: TBinding, item: TItem, context: Context) -> Unit): RecyclerViewBuilder {
 		val inflateMethod = TBinding::class.java.getDeclaredMethod(
@@ -227,6 +231,33 @@ class RecyclerViewBuilder(private val context: Context) {
 		return this
 	}
 
+	fun setDividerItemDecoration(dividerItemDecoration: RecyclerView.ItemDecoration): RecyclerViewBuilder {
+		this.dividerItemDecoration = dividerItemDecoration
+		return this
+	}
+
+	fun setDivider(orientation: Int) =
+		setDividerItemDecoration(DividerItemDecoration(context, orientation))
+
+	fun setDivider(): RecyclerViewBuilder {
+		return if (layoutManager is LinearLayoutManager)
+			setDivider((layoutManager as LinearLayoutManager).orientation)
+		else
+			setDivider(RecyclerView.VERTICAL)
+	}
+
+	fun setMaterialDivider(orientation: Int) = setDividerItemDecoration(
+		MaterialDividerItemDecoration(context, orientation)
+	)
+
+	fun setMaterialDivider(): RecyclerViewBuilder {
+		return if (layoutManager is LinearLayoutManager)
+			setMaterialDivider((layoutManager as LinearLayoutManager).orientation)
+		else
+			setMaterialDivider(RecyclerView.VERTICAL)
+	}
+
+	@SuppressLint("SetTextI18n")
 	fun build(recyclerView: RecyclerView): ExtensibleRecyclerAdapter {
 		val tm = typesMap.toMutableMap()
 		tm[ExtensibleRecyclerAdapter.NO_ITEMS_VIEW_TYPE] = emptyListItem ?: RecyclerViewItemType(
@@ -256,6 +287,10 @@ class RecyclerViewBuilder(private val context: Context) {
 		val adapter = ExtensibleRecyclerAdapter(context, tm.toMap())
 		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = adapter
+
+		if (dividerItemDecoration != null) {
+			recyclerView.addItemDecoration(dividerItemDecoration!!)
+		}
 
 
 		recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

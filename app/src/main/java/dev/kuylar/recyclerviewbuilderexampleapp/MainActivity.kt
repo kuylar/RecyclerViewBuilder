@@ -1,12 +1,12 @@
 package dev.kuylar.recyclerviewbuilderexampleapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.kuylar.recyclerviewbuilder.RecyclerViewBuilder
 import dev.kuylar.recyclerviewbuilderexampleapp.databinding.ActivityMainBinding
@@ -16,6 +16,7 @@ import dev.kuylar.recyclerviewbuilderexampleapp.databinding.ItemTextSpecialBindi
 class MainActivity : AppCompatActivity() {
 	private lateinit var binding: ActivityMainBinding
 
+	@SuppressLint("SetTextI18n")
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		enableEdgeToEdge()
@@ -68,6 +69,10 @@ class MainActivity : AppCompatActivity() {
 			.setLoadingItem(R.layout.item_loading)
 			// Optional, but it exists :thumbs_up:
 			.setLinearLayoutManager(LinearLayoutManager.VERTICAL)
+			// Sets the default item divider provided by DividerItemDecoration
+			.setDivider()
+			// ...or the one from the Material library
+			.setMaterialDivider()
 			.build(binding.recycler)
 
 		binding.addbutton.setOnClickListener {
